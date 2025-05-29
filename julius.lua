@@ -1,5 +1,3 @@
---// Da Hood Script (Silent Aim, Camlock, Triggerbot) by @yourname
---// Place this on GitHub and load with: loadstring(game:HttpGet("https://raw.githubusercontent.com/yourname/repo/main/DaHoodMain.lua"))()
 
 local Players, RS, UIS, Camera = game:GetService("Players"), game:GetService("RunService"), game:GetService("UserInputService"), workspace.CurrentCamera
 local LocalPlayer, Mouse = Players.LocalPlayer, Players.LocalPlayer:GetMouse()
