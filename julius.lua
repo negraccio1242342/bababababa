@@ -1,5 +1,4 @@
---// Da Hood Script (Silent Aim, Camlock, Triggerbot) by @yourname
---// Place this on GitHub and load with: loadstring(game:HttpGet("https://raw.githubusercontent.com/yourname/repo/main/DaHoodMain.lua"))()
+local Silent = Script.SilentAim or {}
 
 local Players, RS, UIS, Camera = game:GetService("Players"), game:GetService("RunService"), game:GetService("UserInputService"), workspace.CurrentCamera
 local LocalPlayer, Mouse = Players.LocalPlayer, Players.LocalPlayer:GetMouse()
@@ -10,7 +9,7 @@ local TriggerEnabled = false
 
 --// FOV Circle
 local FOV = Drawing.new("Circle")
-FOV.Radius = Script.SilentAim.FOV or 120
+FOV.Radius = Silent.FOV or 120
 FOV.Color = Color3.fromRGB(255, 255, 255)
 FOV.Thickness = 1
 FOV.Transparency = 1
