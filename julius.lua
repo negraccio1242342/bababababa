@@ -27,6 +27,19 @@ RS.RenderStepped:Connect(function()
 end)
 
 --// Utilities
+--// Resolver velocity calculation
+local function CalculateResolverVelocity(part)
+    if not part then return Vector3.zero end
+    local lastPos = part.Position
+    task.wait() -- wait one frame
+    local curPos = part.Position
+    local delta = RS.RenderStepped:Wait()
+    delta = math.clamp(delta, 0.001, 0.033)
+
+    return (curPos - lastPos) / delta
+end
+
+
 local function IsAlive(plr)
     local char = plr.Character
     if not char then return false end
@@ -94,7 +107,14 @@ mt.__index = function(self, key)
         if target and IsAlive(target) then
             local part = GetPart(target)
             if part then
-                local prediction = part.Velocity * (Silent.Prediction or 0)
+               local prediction
+if Script.Resolver and Script.Resolver.Enabled then
+    local velocity = CalculateResolverVelocity(part)
+    prediction = velocity * (Silent.Prediction or 0)
+else
+    prediction = part.Velocity * (Silent.Prediction or 0)
+end
+
                 return (key == "Hit" and (part.CFrame.Position + prediction)) or part
             end
         end
@@ -128,7 +148,14 @@ RS.RenderStepped:Connect(function()
     if Camlock.Enabled and Target and Target.Character then
         local part = GetPart(Target)
         if part then
-            local prediction = part.Velocity * (Camlock.Prediction or 0)
+            local prediction
+if Script.Resolver and Script.Resolver.Enabled then
+    local velocity = CalculateResolverVelocity(part)
+    prediction = velocity * (Camlock.Prediction or 0)
+else
+    prediction = part.Velocity * (Camlock.Prediction or 0)
+end
+
             local aimPos = part.Position + prediction
             local camCF = Camera.CFrame
             Camera.CFrame = CFrame.new(camCF.Position, aimPos):Lerp(camCF, Camlock.Smoothness or 0.1)
